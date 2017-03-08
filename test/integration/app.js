@@ -44,7 +44,7 @@ describe('Routes Books', () => {
 		it('Should create a book', (done) => {
 			const bookPost = {
 				id: 2,
-				name: 'Book create via a POST'
+				name: 'Book create via a POST',
 			};
 			request
                 .post('/books')

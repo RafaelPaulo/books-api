@@ -6,7 +6,8 @@
         "expect": true,
         "app": true,
         "request": true,
-        "beforeEach": true
+        "beforeEach": true,
+        "td": true
     },
     "rules": {
         "no-tabs": 0,
