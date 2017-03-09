@@ -7,14 +7,15 @@
         "app": true,
         "request": true,
         "beforeEach": true,
-        "td": true
+        "td": true,
+        "Joi": true,
+        "joiAssert": true
     },
     "rules": {
-        "no-tabs": 0,
-        "indent": [2, "tab"],
-        "key-spacing": [2, {
-          "beforeColon": false,
-          "afterColon": true
-        }]
+        "semi": 2,
+        "import/no-extraneous-dependencies": [
+            "error",
+            { "devDependencies": true }
+        ]
     }
 }

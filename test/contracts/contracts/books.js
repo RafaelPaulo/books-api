@@ -15,28 +15,38 @@ describe('Routes Books', () => {
   });
 
   describe('GET /books', () => {
+    const booksList = Joi.array().items(Joi.object().keys({
+      id: Joi.number(),
+      name: Joi.string(),
+      created_at: Joi.date().iso(),
+      updated_at: Joi.date().iso(),
+    }));
+
     it('Should return a list of books', (done) => {
       request
-        .get('/books')
-        .end((err, res) => {
-          expect(res.body[0].id).to.be.equal(defaultBook.id);
-          expect(res.body[0].name).to.be.equal(defaultBook.name);
-
-          done(err);
-        });
+            .get('/books')
+            .end((err, res) => {
+              joiAssert(res.body, booksList);
+              done(err);
+            });
     });
   });
 
   describe('GET /books/{id}', () => {
+    const book = Joi.object().keys({
+      id: Joi.number(),
+      name: Joi.string(),
+      created_at: Joi.date().iso(),
+      updated_at: Joi.date().iso(),
+    });
+
     it('Should return a books', (done) => {
       request
-        .get('/books/1')
-        .end((err, res) => {
-          expect(res.body.id).to.be.equal(defaultBook.id);
-          expect(res.body.name).to.be.equal(defaultBook.name);
-
-          done(err);
-        });
+            .get('/books/1')
+            .end((err, res) => {
+              joiAssert(res.body, book);
+              done(err);
+            });
     });
   });
 
@@ -46,13 +56,19 @@ describe('Routes Books', () => {
         id: 2,
         name: 'Book create via a POST',
       };
+
+      const book = Joi.object().keys({
+        id: Joi.number(),
+        name: Joi.string(),
+        created_at: Joi.date().iso(),
+        updated_at: Joi.date().iso(),
+      });
+
       request
         .post('/books')
         .send(bookPost)
         .end((err, res) => {
-          expect(res.body.id).to.be.equal(bookPost.id);
-          expect(res.body.name).to.be.equal(bookPost.name);
-
+          joiAssert(res.body, book);
           done(err);
         });
     });
@@ -64,11 +80,14 @@ describe('Routes Books', () => {
         id: 1,
         name: 'Updated book',
       };
+
+      const updatedCount = Joi.array().items(1);
+
       request
         .put('/books/1')
         .send(updatedBook)
         .end((err, res) => {
-          expect(res.body).to.be.eql([1]);
+          joiAssert(res.body, updatedCount);
           done(err);
         });
     });

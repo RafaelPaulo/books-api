@@ -1,48 +1,48 @@
 import BooksController from '../controllers/books';
 
 export default (app) => {
-	const booksController = new BooksController(app.datasource.models.Books);
-	app.route('/books')
+  const booksController = new BooksController(app.datasource.models.Books);
+  app.route('/books')
         .get((req, res) => {
-	booksController
+          booksController
                 .getAll()
                 .then((response) => {
-	res.status(response.statusCode);
-	res.json(response.data);
-});
-})
+                  res.status(response.statusCode);
+                  res.json(response.data);
+                });
+        })
         .post((req, res) => {
-	booksController
+          booksController
                 .create(req.body)
                 .then((response) => {
-	res.status(response.statusCode);
-	res.json(response.data);
-});
-});
+                  res.status(response.statusCode);
+                  res.json(response.data);
+                });
+        });
 
-	app.route('/books/:id')
+  app.route('/books/:id')
         .get((req, res) => {
-	booksController
+          booksController
                 .getById(req.body, req.params)
                 .then((response) => {
-	res.status(response.statusCode);
-	res.json(response.data);
-});
-})
+                  res.status(response.statusCode);
+                  res.json(response.data);
+                });
+        })
         .put((req, res) => {
-	booksController
+          booksController
                 .update(req.body, req.params)
                 .then((response) => {
-	res.status(response.statusCode);
-	res.json(response.data);
-});
-})
+                  res.status(response.statusCode);
+                  res.json(response.data);
+                });
+        })
         .delete((req, res) => {
-	booksController
+          booksController
                 .delete(req.params)
                 .then((response) => {
-	res.status(response.statusCode);
-	res.json(response.data);
-});
-});
+                  res.status(response.statusCode);
+                  res.json(response.data);
+                });
+        });
 };
