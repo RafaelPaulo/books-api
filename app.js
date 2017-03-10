@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import config from './config/config';
 import datasource from './config/datasource';
 import bookRoutes from './routes/books';
+import userRoutes from './routes/users';
 
 const app = express();
 
@@ -12,9 +13,8 @@ app.datasource = datasource(app);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const Books = app.datasource.models.Books;
-
-bookRoutes(app, Books);
+bookRoutes(app);
+userRoutes(app);
 
 app.set('port', 7000);
 
