@@ -3,6 +3,7 @@ describe('Routes Books', () => {
   const defaultBook = {
     id: 1,
     name: 'Default Book',
+    description: 'Default Description',
   };
 
   beforeEach((done) => {
@@ -21,6 +22,7 @@ describe('Routes Books', () => {
         .end((err, res) => {
           expect(res.body[0].id).to.be.equal(defaultBook.id);
           expect(res.body[0].name).to.be.equal(defaultBook.name);
+          expect(res.body[0].description).to.be.equal(defaultBook.description);
 
           done(err);
         });
@@ -34,6 +36,7 @@ describe('Routes Books', () => {
         .end((err, res) => {
           expect(res.body.id).to.be.equal(defaultBook.id);
           expect(res.body.name).to.be.equal(defaultBook.name);
+          expect(res.body.description).to.be.equal(defaultBook.description);
 
           done(err);
         });
@@ -45,6 +48,7 @@ describe('Routes Books', () => {
       const bookPost = {
         id: 2,
         name: 'Book create via a POST',
+        description: 'Book\' description.',
       };
       request
         .post('/books')
@@ -52,6 +56,7 @@ describe('Routes Books', () => {
         .end((err, res) => {
           expect(res.body.id).to.be.equal(bookPost.id);
           expect(res.body.name).to.be.equal(bookPost.name);
+          expect(res.body.description).to.be.equal(bookPost.description);
 
           done(err);
         });
