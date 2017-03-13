@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
 export default (sequilize, DataType) => {
-  const Users = sequilize.define('Users', {
+  const users = sequilize.define('users', {
     id: {
       type: DataType.INTEGER,
       primaryKey: true,
@@ -30,9 +30,9 @@ export default (sequilize, DataType) => {
     },
   }, {
     hooks: {
-      beforeCreate: (User) => {
+      beforeCreate: (user) => {
         const salt = bcrypt.genSaltSync();
-        User.set('password', bcrypt.hashSync(User.password, salt));
+        user.set('password', bcrypt.hashSync(user.password, salt));
       },
     },
     classMethods: {
@@ -40,5 +40,5 @@ export default (sequilize, DataType) => {
     },
   });
 
-  return Users;
+  return users;
 };
