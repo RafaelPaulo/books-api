@@ -22,7 +22,7 @@ describe('Routes Users', () => {
         .get('/users')
         .end((err, res) => {
           expect(res.body[0].id).to.be.equal(defaultUser.id);
-          expect(res.body[0].email).to.be.equal(defaultUser.email);
+          expect(res.body[0].name).to.be.equal(defaultUser.name);
           expect(res.body[0].email).to.be.equal(defaultUser.email);
 
           done(err);

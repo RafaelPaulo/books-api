@@ -4,6 +4,7 @@ import config from './config/config';
 import datasource from './config/datasource';
 import bookRoutes from './routes/books';
 import userRoutes from './routes/users';
+import authRoutes from './routes/auth';
 import authorization from './auth';
 
 const app = express();
@@ -20,6 +21,7 @@ app.auth = auth;
 
 bookRoutes(app);
 userRoutes(app);
+authRoutes(app);
 
 app.set('port', 7000);
 
