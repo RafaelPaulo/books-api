@@ -1,5 +1,9 @@
+import jwt from 'jwt-simple';
+
 describe('Routes Users', () => {
   const Users = app.datasource.models.Users;
+  const jwtSecret = app.config.jwtSecret;
+
   const defaultUser = {
     id: 1,
     name: 'Default User',
@@ -7,12 +11,22 @@ describe('Routes Users', () => {
     password: 'test',
   };
 
+  let token;
+
   beforeEach((done) => {
     Users
         .destroy({ where: {} })
-        .then(() => Users.create(defaultUser))
-        .then(() => {
-          done();
+        .then(() => Users.create({
+          name: 'John',
+          email: 'john@mail.com',
+          password: '12345',
+        }))
+        .then((user) => {
+          Users.create(defaultUser)
+            .then(() => {
+              token = jwt.encode({ id: user.id }, jwtSecret);
+              done();
+            });
         });
   });
 
@@ -20,6 +34,7 @@ describe('Routes Users', () => {
     it('Should return a list of users', (done) => {
       request
         .get('/users')
+        .set('Authorization', `JWT ${token}`)
         .end((err, res) => {
           expect(res.body[0].id).to.be.equal(defaultUser.id);
           expect(res.body[0].name).to.be.equal(defaultUser.name);
@@ -34,6 +49,7 @@ describe('Routes Users', () => {
     it('Should return a users', (done) => {
       request
         .get('/users/1')
+        .set('Authorization', `JWT ${token}`)
         .end((err, res) => {
           expect(res.body.id).to.be.equal(defaultUser.id);
           expect(res.body.name).to.be.equal(defaultUser.name);
@@ -54,6 +70,7 @@ describe('Routes Users', () => {
       };
       request
         .post('/users')
+        .set('Authorization', `JWT ${token}`)
         .send(newUser)
         .end((err, res) => {
           expect(res.body.id).to.be.equal(newUser.id);
@@ -74,6 +91,7 @@ describe('Routes Users', () => {
       };
       request
         .put('/users/1')
+        .set('Authorization', `JWT ${token}`)
         .send(updatedUser)
         .end((err, res) => {
           expect(res.body).to.be.eql([1]);
@@ -86,6 +104,7 @@ describe('Routes Users', () => {
     it('Should delete a user', (done) => {
       request
         .delete('/users/1')
+        .set('Authorization', `JWT ${token}`)
         .end((err, res) => {
           expect(res.statusCode).to.be.equal(204);
           done(err);

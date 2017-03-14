@@ -37,4 +37,5 @@ jspm_packages
 .node_repl_history
 
 # DataBase archives
-*books.sqlite
+prod_books.sqlite
+test_books.sqlite
